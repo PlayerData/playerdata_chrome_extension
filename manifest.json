@@ -1,0 +1,15 @@
+{
+  "manifest_version": 2,
+  "name": "Player Data Projects",
+  "description": "Allow you to quickly select the player data project of your choice",
+  "version": "1.0",
+  "permissions": [],
+  "chrome_url_overrides": {
+    "newtab": "shownewtab.html"
+  },
+  "browser_action": {
+    "default_title": "PD Projects",
+    "default_icon": "pdlogo.png",
+    "default_popup": "showpopup.html" 
+  }
+}
