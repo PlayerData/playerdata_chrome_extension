@@ -18,27 +18,14 @@
         </div>
     </div>
     <div class="container">
-        <div class="row">
-            <div class="col-sm">
-                <h3 style="text-align:center">Projects</h3>
-                <div id="list" class="list-group"></div>
-                <div id="popupList" style="visibility: hidden;"></div>
-            </div>
-            <div class="col-sm">
-                <h3>Pull Requests</h3>
-                <div class="list-group">
-                    <a class="list-group-item list-group-item-action" href="https://github.com/pulls">My Pull
-                        Requests</a>
-                    <a class="list-group-item list-group-item-action"
-                        href="https://github.com/pulls/review-requested">Waiting My Review</a>
-                </div>
-            </div>
-        </div>
+        <div id="lists"></div>
+        <div id="pulists" style="visibility: hidden; max-height:0;"></div>
     </div>
     <script src="jquery.min.js"></script>
     <script src="popper.min.js"></script>
     <script src="bootstrap.min.js"></script>
-    <script src="showlist.js"></script>
+    <script src="lists.js"></script>
+    <script src="showlists.js"></script>
 </body>
 
 </html>

@@ -7,27 +7,16 @@
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 </head>
 
-<body style="width:300px">
+<body style="width:400px">
     <div class="container">
-        <div class="col-sm">
-            <h3 style="text-align:center">Projects</h3>
-            <div id="list" style="max-height:0; visibility: hidden;"></div>
-            <div id="popupList" class="list-group"></div>
-        </div>
-        <div class="col-sm">
-            <h3>Pull Requests</h3>
-            <div class="list-group">
-                <a class="list-group-item list-group-item-action" target="_blank" href="https://github.com/pulls">My
-                    Pull Requests</a>
-                <a class="list-group-item list-group-item-action" target="_blank"
-                    href="https://github.com/pulls/review-requested">Waiting My Review</a>
-            </div>
-        </div>
+        <div id="pulists"></div>
+        <div id="lists" style="visibility: hidden; max-height:0;"></div>
     </div>
     <script src="jquery.min.js"></script>
     <script src="popper.min.js"></script>
     <script src="bootstrap.min.js"></script>
-    <script src="showlist.js"></script>
+    <script src="lists.js"></script>
+    <script src="showlists.js"></script>
 </body>
 
 </html>
