@@ -1,3 +1,4 @@
 .web-extension-id
 LICENSE
 web-ext-artifacts/*
+lists.js
