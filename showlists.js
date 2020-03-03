@@ -2,7 +2,7 @@ var is_popup = false;
 
 function create_new_row(current_row) {
     var html = '';
-    if (current_row > 1) {
+    if (current_row > 0) {
         html += '</div>';
     }
     html += '<div class="row">';
