@@ -2,7 +2,7 @@
 This project is to show quick links on the new tab and from a special item in Chrome
 
 # Setup
-- Copy the lists.example.js file and rename to list.js
+- Copy the lists.example.js file and rename to lists.js
 - Change the links to be more useful links - Note that you can have several rows and custom titles for the areas of links
 
 # Installation
