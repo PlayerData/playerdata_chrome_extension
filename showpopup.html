@@ -10,15 +10,26 @@
     />
   </head>
 
-  <body style="width: 400px;">
+  <body style="width: 400px; margin-top: 20px; margin-bottom: 20px">
     <div class="container">
-      <div id="pulists"></div>
-      <div id="lists" style="display: none;"></div>
+      <div id="on_call">
+        <h3>On Call Links</h3>
+        <div class="list-group">
+          <a target="_blank" class="list-group-item list-group-item-action" href="https://github.com/PlayerData/KB/blob/master/processes/on-call.md">Instructions</a>
+          <a target="_blank" class="list-group-item list-group-item-action" href="https://playerdatahelp.zendesk.com/agent/filters/360050229780">Zendesk</a>
+          <a target="_blank" class="list-group-item list-group-item-action" href="https://app.playerdata.co.uk/sidekiq/retries">Sidekiq Retries</a>
+          <a target="_blank" class="list-group-item list-group-item-action" href="https://sentry.io/organizations/playerdata-ltd/issues/?project=1503363">Sentry</a>
+        </div>
+      </div>
+      <div id="github_search row">
+        <h3>Search Github</h3>
+        <input type="text" id="gh_search" class="form-control"/>
+        <button id="gh_button" class="btn btn-primary" style="margin-top: 10px">Search</button>
+      </div>
     </div>
     <script src="jquery.min.js"></script>
     <script src="popper.min.js"></script>
     <script src="bootstrap.min.js"></script>
-    <script src="lists.js"></script>
-    <script src="showlists.js"></script>
+    <script src="showpopup.js"></script>
   </body>
 </html>
