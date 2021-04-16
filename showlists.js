@@ -6,8 +6,31 @@ function create_new_row(current_row) {
   html += '<div class="row">';
   return html;
 }
+function get_request(url) {
+  var xhttp = new XMLHttpRequest();
+  xhttp.open("GET", url, false);
+  xhttp.send();
+  return xhttp.responseText;
+}
+
+function create_a_mergefreeze_item(list_item) {
+  var url = list_item.url + "?access_token=" + list_item.token;
+  const result = JSON.parse(get_request(url));
+  const is_frozen = result.frozen;
+  const badge_type = is_frozen ? "badge-danger": "badge-success";
+  const badge_text = is_frozen ? "Frozen (by " + result.frozen_by + ")" : "Unfrozen";
+  var html = "";
+  html +=
+    '<a class="list-group-item list-group-item-action" href="https://mergefreeze.com">' +
+    list_item.name + ' <span class="badge ' + badge_type + '">' + badge_text + '</span>' +
+    "</a>";
+  return html;
+}
 
 function create_a_list_item(list_item) {
+  if (list_item.token) {
+    return create_a_mergefreeze_item(list_item);
+  }
   var html = "";
   html +=
     '<a class="list-group-item list-group-item-action" href="' +
