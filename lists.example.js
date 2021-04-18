@@ -15,7 +15,7 @@ var pdlists = [
             { "name": "My Pull Requests", "url": "https://github.com/pulls" },
             { "name": "Waiting My Review", "url": "https://github.com/pulls/review-requested" }
         ]
-    }
+    },
     {
         "title": "Merge Freeze",
         "row": 2,
