@@ -3,13 +3,17 @@
   "name": "Player Data Links",
   "description": "Creates a quick links newtab and browser pop up for Player Data",
   "version": "1.0",
-  "permissions": ["tabs", "https://www.mergefreeze.com/*"],
+  "permissions": [
+    "tabs",
+    "https://www.mergefreeze.com/*",
+    "storage"
+  ],
   "chrome_url_overrides": {
     "newtab": "shownewtab.html"
   },
   "browser_action": {
     "default_title": "PD Projects",
-    "default_icon": "pdlogo.png",
+    "default_icon": "img/pdlogo.png",
     "default_popup": "showpopup.html"
   }
 }
