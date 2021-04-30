@@ -20,3 +20,9 @@ To show pager duty incidents that are triggered in the header, you will need to 
 - You should now have this plugin installed.
 
 This extension will also work in Firefox by loading a temporary extension (or packaging and loading from a file).
+
+# Updates
+- pull the code
+- Go to `chrome://extensions` in your browswer.
+- Reload the plugin
+ 
