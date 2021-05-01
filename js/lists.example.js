@@ -1,4 +1,5 @@
 
+var pager_duty_key="<INSERT KEY HERE>";
 var pdlists = [
     {
         "title": "Some Links",

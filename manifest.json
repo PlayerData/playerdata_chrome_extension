@@ -6,6 +6,7 @@
   "permissions": [
     "tabs",
     "https://www.mergefreeze.com/*",
+    "https://api.pagerduty.com/*",
     "storage"
   ],
   "chrome_url_overrides": {
