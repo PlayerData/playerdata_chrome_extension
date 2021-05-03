@@ -1,4 +1,4 @@
-# Player Data Quicklinks Extension for Chrome
+# PlayerData Quicklinks Extension for Chrome
 This project is to show quick links on the new tab and from a special item in Chrome
 
 # Setup

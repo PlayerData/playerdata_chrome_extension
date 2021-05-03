@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
-  "name": "Player Data Links",
-  "description": "Creates a quick links newtab and browser pop up for Player Data",
+  "name": "PlayerData Links",
+  "description": "Creates a quick links newtab and browser pop up for PlayerData",
   "version": "1.0",
   "permissions": [
     "tabs",
