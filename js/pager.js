@@ -9,11 +9,10 @@ function get_incidents() {
         var result = JSON.parse(xhttp.responseText);
         for(var i = 0; i <  result.incidents.length; i++) {
             var incident = result.incidents[i];
-            console.log(incident);
             var new_incident_link = '<div class="row" style="padding: 10px">';
             new_incident_link += `<a style="font-size: 50px" href="${incident.html_url}"><span class="badge badge-danger">${incident.title}</span></a>`
             new_incident_link += '</div>';
-            document.getElementById("pager").innerHTML += new_incident_link;
+            document.getElementById("incidents").innerHTML += new_incident_link;
         }
       }
     };
@@ -24,9 +23,32 @@ function get_incidents() {
 
 }
 
+function get_oncalls() {
+  var url = "https://api.pagerduty.com/oncalls?total=false&time_zone=UTC&escalation_policy_ids%5B%5D=PLEBQTR";
+  var xhttp = new XMLHttpRequest();
+  xhttp.withCredentials = true;
+  xhttp.open("GET", url, true);
+  xhttp.onreadystatechange = function () {
+    if (xhttp.readyState == 4) {
+      var result = JSON.parse(xhttp.responseText);
+      var oncalls = result.oncalls.sort((a, b) => a.escalation_level - b.escalation_level);
+      for(var i = 0; i <  oncalls.length; i++) {
+        var oncall = oncalls[i];
+          var oncall_link = `<span class="badge badge-primary">${oncall.user.summary}(${oncall.escalation_level})</span>&nbsp;`;
+          document.getElementById("oncalls").innerHTML += oncall_link;
+      }
+    }
+  };
+  xhttp.setRequestHeader("accept", "application/vnd.pagerduty+json;version=2");
+  xhttp.setRequestHeader("content-type", "application/json");
+  xhttp.setRequestHeader("authorization", "Token token=" + pager_duty_key);
+  xhttp.send();
+}
 
 document.addEventListener("DOMContentLoaded", function () {
     if(pager_duty_key) {
+        document.getElementById("pager").innerHTML = "<div id='oncalls'>On calls: </div><div id='incidents'></div>";
         get_incidents();
+        get_oncalls();
     }
   });
