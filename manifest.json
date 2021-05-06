@@ -16,7 +16,16 @@
   },
   "action": {
     "default_title": "PD Projects",
-    "default_icon": "img/pdlogo.png",
+    "default_icon": {
+      "16": "img/pd_icon_16.png",
+      "48": "img/pd_icon_48.png",
+      "128": "img/pd_icon_128.png"
+    },
     "default_popup": "showpopup.html"
+  },
+  "icons": {
+    "16": "img/pd_icon_16.png",
+    "48": "img/pd_icon_48.png",
+    "128": "img/pd_icon_128.png"
   }
 }
