@@ -1,20 +1,31 @@
 {
-  "manifest_version": 2,
+  "manifest_version": 3,
   "name": "PlayerData Links",
   "description": "Creates a quick links newtab and browser pop up for PlayerData",
   "version": "1.0",
   "permissions": [
     "tabs",
-    "https://www.mergefreeze.com/*",
-    "https://api.pagerduty.com/*",
     "storage"
+  ],
+  "host_permissions": [
+    "https://www.mergefreeze.com/*",
+    "https://api.pagerduty.com/*"
   ],
   "chrome_url_overrides": {
     "newtab": "shownewtab.html"
   },
-  "browser_action": {
+  "action": {
     "default_title": "PD Projects",
-    "default_icon": "img/pdlogo.png",
+    "default_icon": {
+      "16": "img/pd_icon_16.png",
+      "48": "img/pd_icon_48.png",
+      "128": "img/pd_icon_128.png"
+    },
     "default_popup": "showpopup.html"
+  },
+  "icons": {
+    "16": "img/pd_icon_16.png",
+    "48": "img/pd_icon_48.png",
+    "128": "img/pd_icon_128.png"
   }
 }
