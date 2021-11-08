@@ -15,6 +15,10 @@
     "matches": ["https://github.com/*"],
     "js": ["js/project-close.js", "js/lib/confetti.js"],
     "run_at": "document_end"
+  },{
+    "matches": ["https://github.com/orgs/PlayerData/projects/*"],
+    "js": ["js/project-button.js"],
+    "run_at": "document_end"
   }],
   "chrome_url_overrides": {
     "newtab": "shownewtab.html"
