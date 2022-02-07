@@ -34,7 +34,11 @@ function get_oncalls() {
       var oncalls = result.oncalls.sort((a, b) => a.escalation_level - b.escalation_level);
       for(var i = 0; i <  oncalls.length; i++) {
         var oncall = oncalls[i];
-          var oncall_link = `<span class="badge badge-primary">${oncall.user.summary}(${oncall.escalation_level})</span>&nbsp;`;
+          if (oncall.escalation_level === 1) {
+            var oncall_link = `<h1 class="badge badge-primary">${oncall.escalation_level}. ${oncall.user.summary}</h1>&nbsp;`;
+          } else {
+            var oncall_link = `<h2 class="badge badge-secondary">${oncall.escalation_level}. ${oncall.user.summary}</h2>&nbsp;`;
+          }
           document.getElementById("oncalls").innerHTML += oncall_link;
       }
     }
@@ -47,7 +51,6 @@ function get_oncalls() {
 
 document.addEventListener("DOMContentLoaded", function () {
     if(pager_duty_key) {
-        document.getElementById("pager").innerHTML = "<div id='oncalls'>On calls: </div><div id='incidents'></div>";
         get_incidents();
         get_oncalls();
     }

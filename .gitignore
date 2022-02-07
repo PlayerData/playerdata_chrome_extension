@@ -2,3 +2,4 @@
 LICENSE
 web-ext-artifacts/*
 lists.js
+*.DS_Store
