@@ -60,5 +60,9 @@ function refresh_links() {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
+  $("#gh_button").click(function() {
+    var search_term = $("#gh_search").val();
+    chrome.tabs.create({url:'https://github.com/PlayerData/KB/search?q=' + search_term});
+  });
   refresh_links();
 });
