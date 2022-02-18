@@ -1,26 +1,50 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
-
-<head>
+  <head>
     <title>New Tab | PlayerData</title>
-    <link rel="stylesheet" href="css/lib/bootstrap.min.css"
-        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link
+      rel="stylesheet"
+      href="css/lib/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    />
     <link rel="stylesheet" href="css/chrome_style.css" />
-</head>
+  </head>
 
-<body>
-    <div class="card mt-2" style="width: 50%; text-align: center; margin:auto; padding: 10px">
-        <img src="img/pdlogo.svg" class="card-img-top" alt="PlayerData logo">
-        <div class="card-body">
-            <h5 class="card-title">PlayerData Quick Links</h5>
-            <p class="card-text">Find important quick links here to get to important parts of the PlayerData systems.
-            </p>
-            <a href="https://playerdata.co.uk" class="btn btn-primary">Main Website</a>
+  <body>
+    <div
+      class="card mt-2"
+      style="width: 50%; text-align: center; margin: auto; padding: 10px"
+    >
+      <img src="img/pdlogo.svg" class="card-img-top" alt="PlayerData logo" />
+      <div class="card-body">
+        <h5 class="card-title">PlayerData Quick Links</h5>
+        <p class="card-text">
+          Find important quick links here to get to important parts of the
+          PlayerData systems.
+        </p>
+        <a href="https://playerdata.co.uk" class="btn btn-primary"
+          >Main Website</a
+        >
+
+        <div id="github_search" class="row mt-2">
+          <div class="col-12">
+            <h3>Search Knowledge Base</h3>
+            <input type="text" id="gh_search" class="form-control" />
+            <button
+              id="gh_button"
+              class="btn btn-primary"
+              style="margin-top: 10px"
+            >
+              Search
+            </button>
+          </div>
         </div>
+      </div>
     </div>
     <div class="container">
-        <div id="pager"></div>
-        <div id="lists"></div>
+      <div id="pager"></div>
+      <div id="lists"></div>
     </div>
     <script src="js/lib/jquery.min.js"></script>
     <script src="js/lib/popper.min.js"></script>
@@ -29,6 +53,5 @@
     <script src="js/lists.js"></script>
     <script src="js/showlists.js"></script>
     <script src="js/dark_mode.js"></script>
-</body>
-
+  </body>
 </html>
