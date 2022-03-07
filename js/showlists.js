@@ -59,10 +59,23 @@ function refresh_links() {
   }
 }
 
-document.addEventListener("DOMContentLoaded", function () {
-  $("#gh_button").click(function() {
-    var search_term = $("#gh_search").val();
-    chrome.tabs.create({url:'https://github.com/PlayerData/KB/search?q=' + search_term});
+function search_kb() {
+  var search_term = $("#gh_search").val();
+  chrome.tabs.create({
+    url: "https://github.com/PlayerData/KB/search?q=" + search_term,
   });
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+  $("#gh_button").click(function () {
+    search_kb();
+  });
+  $("#gh_search").keyup(function (e) {
+    if (e.keyCode == 13) {
+      search_kb();
+    }
+  });
+
+  $("gh_button").onpres;
   refresh_links();
 });
