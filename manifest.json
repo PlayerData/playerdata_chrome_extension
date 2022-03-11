@@ -12,10 +12,6 @@
     "https://api.pagerduty.com/*"
   ],
   "content_scripts": [{
-    "matches": ["https://github.com/*"],
-    "js": ["js/project-close.js", "js/lib/confetti.js"],
-    "run_at": "document_end"
-  },{
     "matches": ["https://github.com/orgs/PlayerData/projects/*"],
     "js": ["js/project-button.js"],
     "run_at": "document_end"
@@ -36,11 +32,5 @@
     "16": "img/pd_icon_16.png",
     "48": "img/pd_icon_48.png",
     "128": "img/pd_icon_128.png"
-  },
-  "web_accessible_resources": [
-    {
-      "resources": ["/img/well-done.png"],
-      "matches": ["https://github.com/*"]
-    }
-  ]
+  }
 }
