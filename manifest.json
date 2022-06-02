@@ -11,11 +11,6 @@
     "https://www.mergefreeze.com/*",
     "https://api.pagerduty.com/*"
   ],
-  "content_scripts": [{
-    "matches": ["https://github.com/orgs/PlayerData/projects/*"],
-    "js": ["js/project-button.js"],
-    "run_at": "document_end"
-  }],
   "chrome_url_overrides": {
     "newtab": "shownewtab.html"
   },
