@@ -1,3 +1,24 @@
+function get_repo_status(repo) {
+  if (!github_read_only_pat) return;
+
+  var url = `https://api.github.com/repos/playerdata/${repo}/commits/master/status`;
+  var xhttp = new XMLHttpRequest();
+  xhttp.open("GET", url, true);
+  xhttp.setRequestHeader("authorization", "token " + github_read_only_pat);
+  xhttp.onreadystatechange = function () {
+    if (xhttp.readyState == 4) {
+      var result = JSON.parse(xhttp.responseText);
+      const is_success = result.state === "success";
+      const badge_icon = is_success
+        ? '<i class="bi bi-check2 text-info" style="font-size: 1.5rem;"></i>'
+        : '<i class="bi bi-cloud-lightning text-success" style="font-size: 2rem;"></i>';
+      var html = "<hr/>Build: " + badge_icon;
+      document.getElementById(`card-body-${repo}`).innerHTML += html;
+    }
+  };
+  xhttp.send();
+}
+
 function create_a_mergefreeze_item(list_item, idx) {
   var url = `${list_item.url}?access_token=${list_item.token}`;
   var xhttp = new XMLHttpRequest();
@@ -7,7 +28,9 @@ function create_a_mergefreeze_item(list_item, idx) {
       var result = JSON.parse(xhttp.responseText);
       const is_frozen = result.frozen;
       const badge_type = is_frozen ? "info" : "success";
-      const badge_icon = is_frozen ? '<i class="bi bi-snow3 text-info" style="font-size: 1.5rem;"></i>' : '<i class="bi bi-check2 text-success" style="font-size: 2rem;"></i>';
+      const badge_icon = is_frozen
+        ? '<i class="bi bi-snow3 text-info" style="font-size: 1.5rem;"></i>'
+        : '<i class="bi bi-check2 text-success" style="font-size: 2rem;"></i>';
       const badge_text = is_frozen
         ? `Frozen by ${result.frozen_by}`
         : "Unfrozen";
@@ -17,14 +40,15 @@ function create_a_mergefreeze_item(list_item, idx) {
           <div class="card-header" style="display: flex; align-items: center; justify-content: space-between;">
           <a href="https://github.com/playerdata/${list_item.name}" style="color: black">${list_item.name}</a> <span>${badge_icon}</span>
           </div>
-          <div class="card-body text-${badge_type}">
+          <div class="card-body text-${badge_type}" id="card-body-${list_item.name}">
             <p class="card-text">${badge_text}</p>
           </div>
         </div>
       </div>
-      `
+      `;
       // var html = `<a class="card" href="https://mergefreeze.com"> <span class="badge ${badge_type}"></span></a>`;
       document.getElementById("list-group-" + idx).innerHTML += html;
+      get_repo_status(list_item.name);
     }
   };
   xhttp.send();
@@ -38,7 +62,8 @@ function create_a_list_item(list_item, idx) {
 function create_new_row(current_row) {
   var new_id = `row-${current_row}`;
   var html = `<div id="${new_id}" class="row"></div>`;
-  document.getElementById("lists").innerHTML += '<div class="container">' + html + '</div>';
+  document.getElementById("lists").innerHTML +=
+    '<div class="container">' + html + "</div>";
   return new_id;
 }
 
