@@ -14,7 +14,9 @@ function create_a_mergefreeze_item(list_item, idx) {
       var html = `
       <div class="col">
         <div class="card border-${badge_type} mb-3" style="max-width: 18rem;">
-          <div class="card-header" style="display: flex; align-items: center; justify-content: space-between;">${list_item.name} <span>${badge_icon}</span></div>
+          <div class="card-header" style="display: flex; align-items: center; justify-content: space-between;">
+          <a href="https://github.com/playerdata/${list_item.name}" style="color: black">${list_item.name}</a> <span>${badge_icon}</span>
+          </div>
           <div class="card-body text-${badge_type}">
             <p class="card-text">${badge_text}</p>
           </div>
