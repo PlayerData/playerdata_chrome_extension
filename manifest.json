@@ -48,6 +48,10 @@
       "run_at": "document_end"
     }
   ],
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  },
   "chrome_url_overrides": {
     "newtab": "shownewtab.html"
   },
