@@ -96,17 +96,12 @@ function refresh_links() {
     create_a_list(the_list, idx, row_id);
   }
 }
-function search_kb() {
-  var search_term = $("#gh_search").val();
-  chrome.tabs.create({
-    url: "https://github.com/PlayerData/KB/search?q=" + search_term,
-  });
-}
+
 
 document.addEventListener("DOMContentLoaded", function () {
   $("#gh_search").keyup(function (e) {
     if (e.keyCode == 13) {
-      search_kb();
+      search_kb("gh_search");
     }
   });
   refresh_links();

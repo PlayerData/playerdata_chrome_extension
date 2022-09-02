@@ -6,7 +6,7 @@ var pdlists = [
         "title": "Merge Freeze",
         "row": 1,
         "links": [
-            {"name": "App", "token": "<TOKEN>", "url": "https://www.mergefreeze.com/api/branches/PlayerData/app/master/"}
+            {"type": "MERGE", "name": "App", "token": "<TOKEN>", "url": "https://www.mergefreeze.com/api/branches/PlayerData/app/master/"}
         ]
     },
     {

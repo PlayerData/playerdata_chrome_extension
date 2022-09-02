@@ -9,7 +9,8 @@
   ],
   "host_permissions": [
     "https://www.mergefreeze.com/*",
-    "https://api.pagerduty.com/*"
+    "https://api.pagerduty.com/*",
+    "https://zenquotes.io/*"
   ],
   "content_scripts": [
     {
@@ -32,8 +33,21 @@
         "js/remove-notification-icon.js"
       ],
       "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "https://github.com/orgs/PlayerData/projects/**"
+      ],
+      "js": [
+        "js/check-in-progress.js"
+      ],
+      "run_at": "document_end"
     }
   ],
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  },
   "chrome_url_overrides": {
     "newtab": "shownewtab.html"
   },

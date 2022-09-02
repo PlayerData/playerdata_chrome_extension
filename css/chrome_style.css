@@ -22,6 +22,14 @@ body.dark-theme .form-control {
   border: none;
 }
 
+.background-green {
+  background-color: #28a745;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
 .card-padding {
   margin: 5px;
   padding: 10px;
@@ -67,4 +75,14 @@ body.dark-theme .form-control {
 .toggle input[type="checkbox"]:checked ~ label::after {
   background-color: #0054b0;
   transform: translateX(25px);
+}
+
+.motivational-quote {
+  font-weight: lighter;
+  font-size: small;
+  min-height: 40px;
+}
+
+.motivational-quote footer {
+  text-align: right;
 }
