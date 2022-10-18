@@ -36,6 +36,18 @@
       "js": [
         "js/remove-notification-icon.js"
       ],
+      "css": [
+        "css/github.css"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "https://github.com/**"
+      ],
+      "js": [
+        "js/remove-notification-icon.js"
+      ],
       "run_at": "document_end"
     },
     {
@@ -48,10 +60,6 @@
       "run_at": "document_end"
     }
   ],
-  "options_ui": {
-    "page": "options.html",
-    "open_in_tab": true
-  },
   "chrome_url_overrides": {
     "newtab": "shownewtab.html"
   },
