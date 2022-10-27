@@ -14,19 +14,10 @@
   "content_scripts": [
     {
       "matches": [
-        "https://github.com/PlayerData/**/pull/*"
-      ],
-      "js": [
-        "js/check-smoke-tests.js"
-      ],
-      "run_at": "document_end"
-    },
-    {
-      "matches": [
         "https://github.com/orgs/PlayerData/projects/**"
       ],
       "js": [
-        "js/check-in-progress.js"
+        "js/check-project-board.js"
       ],
       "css": [
         "css/github.css"
