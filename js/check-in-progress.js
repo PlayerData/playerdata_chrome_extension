@@ -12,11 +12,11 @@ const check_in_progress = () => {
   if (currentInProgress < 3) return;
 
   var area = parentOfSpan.parentNode.parentNode.parentNode.parentNode;
-  var colour = currentInProgress > 4 ? "red" : "orange";
-  area.style.border = `${colour} 3px solid`;
+  currentInProgress > 4
+    ? area.classList.add("pd-in-progress-red")
+    : area.classList.add("pd-in-progress-orange");
 };
 
 window.addEventListener("load", function () {
-  // even with the load we have to make sure everything is loaded...Ugh!
-  this.setTimeout(check_in_progress, 1000);
+  setTimeout(check_in_progress, 1000);
 });

@@ -11,19 +11,38 @@
     "https://www.mergefreeze.com/*",
     "https://api.pagerduty.com/*"
   ],
-  "content_scripts": [{
-    "matches": ["https://github.com/PlayerData/**/pull/*"],
-    "js": ["js/check-smoke-tests.js"],
-    "run_at": "document_end"
-  }, {
-    "matches": ["https://github.com/orgs/PlayerData/projects/**"],
-    "js": ["js/check-in-progress.js"],
-    "run_at": "document_end"
-  }, {
-    "matches": ["https://github.com/**"],
-    "js": ["js/remove-notification-icon.js"],
-    "run_at": "document_end"
-  }],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://github.com/PlayerData/**/pull/*"
+      ],
+      "js": [
+        "js/check-smoke-tests.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "https://github.com/orgs/PlayerData/projects/**"
+      ],
+      "js": [
+        "js/check-in-progress.js"
+      ],
+      "css": [
+        "css/github.css"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "https://github.com/**"
+      ],
+      "js": [
+        "js/remove-notification-icon.js"
+      ],
+      "run_at": "document_end"
+    }
+  ],
   "chrome_url_overrides": {
     "newtab": "shownewtab.html"
   },

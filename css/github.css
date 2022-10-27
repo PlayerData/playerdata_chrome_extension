@@ -1,0 +1,57 @@
+.pd-in-progress-orange {
+    animation: blink-orange ease-in-out 5s infinite;
+    -webkit-animation: blink-orange ease-in-out 5s infinite;
+}
+
+@-webkit-keyframes blink-orange {
+    0% {
+        box-shadow: none;
+    }
+    50% {
+        box-shadow: 0px 0px 7px 2px orange;
+    }
+    100% {
+        box-shadow: none;
+    }
+  }
+
+@keyframes blink-orange {
+    0% {
+        box-shadow: none;
+    }
+    50% {
+        box-shadow: 0px 0px 7px 2px orange;
+    }
+    100% {
+        box-shadow: none;
+    }
+ }
+
+.pd-in-progress-red {
+    animation: blink-red ease-in-out 5s infinite;
+    -webkit-animation: blink-red ease-in-out 5s infinite;
+}
+
+@-webkit-keyframes blink-red {
+    0% {
+        box-shadow: none;
+    }
+    50% {
+        box-shadow: 0px 0px 7px 2px red;
+    }
+    100% {
+        box-shadow: none;
+    }
+  }
+
+@keyframes blink-red {
+    0% {
+        box-shadow: none;
+    }
+    50% {
+        box-shadow: 0px 0px 7px 2px red;
+    }
+    100% {
+        box-shadow: none;
+    }
+ }
