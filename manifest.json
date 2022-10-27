@@ -40,15 +40,6 @@
     },
     {
       "matches": [
-        "https://github.com/orgs/PlayerData/projects/**"
-      ],
-      "js": [
-        "js/check-in-progress.js"
-      ],
-      "run_at": "document_end"
-    },
-    {
-      "matches": [
         "https://github.com/**"
       ],
       "js": [
