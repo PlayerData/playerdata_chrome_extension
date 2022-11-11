@@ -1,10 +1,8 @@
-function get_repo_status(repo) {
-  if (!github_read_only_pat) return;
-
+function get_repo_status(repo, ghPat) {
   var url = `https://api.github.com/repos/playerdata/${repo}/commits/master/status`;
   var xhttp = new XMLHttpRequest();
   xhttp.open("GET", url, true);
-  xhttp.setRequestHeader("authorization", "token " + github_read_only_pat);
+  xhttp.setRequestHeader("authorization", "token " + ghPat);
   xhttp.onreadystatechange = function () {
     if (xhttp.readyState == 4) {
       var result = JSON.parse(xhttp.responseText);
@@ -48,7 +46,11 @@ function create_a_mergefreeze_item(list_item, idx) {
       `;
       // var html = `<a class="card" href="https://mergefreeze.com"> <span class="badge ${badge_type}"></span></a>`;
       document.getElementById("list-group-" + idx).innerHTML += html;
-      get_repo_status(list_item.name);
+      chrome.storage.sync.get(["ghPat"], function (result) {
+        if (result.ghPat) {
+          get_repo_status(list_item.name, result.ghPat);
+        }
+      });
     }
   };
   xhttp.send();
@@ -100,8 +102,8 @@ function refresh_links() {
   }
 }
 chrome.storage.sync.get(["mergefreeze"], function (result) {
-  if(result.mergefreeze) {
-    document.getElementById("merge-lists").style.display = 'block';
+  if (result.mergefreeze) {
+    document.getElementById("merge-lists").style.display = "block";
   }
 });
 
