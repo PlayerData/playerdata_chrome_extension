@@ -34,6 +34,10 @@ function setQuickLinksFields() {
   }
 
   chrome.storage.sync.set({ quickLinks });
+  document.getElementById("quick-links-success-message").style.display = "block";
+  setTimeout(() => {
+    document.getElementById("quick-links-success-message").style.display = "none";
+  }, 5000)
 }
 
 function renderQuickLinkField(field) {
