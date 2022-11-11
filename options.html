@@ -1,109 +1,168 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <title>PD Settings</title>
+    <link
+      rel="stylesheet"
+      href="css/lib/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css"
+    />
+    <link rel="stylesheet" href="css/chrome_style.css" />
+  </head>
 
-<head>
-  <title>PD Settings</title>
-  <link rel="stylesheet" href="css/lib/bootstrap.min.css"
-    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
-  <link rel="stylesheet" href="css/chrome_style.css" />
-</head>
-
-<body>
-  <div class="container">
-    <div class="row mt-4 text-center">
-      <div class="col-md-4 offset-md-4">
-        <img src="img/pd_green_grey.png" height="100" alt="PlayerData logo" />
-      </div>
-    </div>
-    <div class="row mt-2 text-center">
-      <div class="col-md-4 offset-md-4">
-        <h3 class="card-title">PlayerData</h3>
-      </div>
-    </div>
-    <div class="row mt-4">
-      <div class="col-md-8 order-md-1">
-        <div class="col-md-12 border border-success rounded p-3">
-          <h6 class="mb-0 font-weight-bold">Credentials <span class="text-right"><i data-toggle="popover"
-                data-content="Be careful to scope your tokens to only what's needed." data-placement="top"
-                class="bi bi-info-circle"></i></span></h6>
-          <hr class="background-green" />
-          <div class="row">
-            <div class="col-12">
-              <label for="gh-pat" class="">GitHub Personal Access Token</label>
-              <input type="password" placeholder="GitHub Personal Access Token" id="gh-pat" class="form-control" />
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-12 pt-3">
-              <label for="pd-pat" class="">PagerDuty Personal Access Token</label>
-              <input type="password" placeholder="PagerDuty Personal Access Token" id="pd-pat" class="form-control" />
-            </div>
-          </div>
-        </div>
-        <div class="col-md-12 border border-success rounded p-3 mt-2">
-          <h6 class="mb-0 font-weight-bold">PD Links (Popout) <span class="text-right"><i data-toggle="popover"
-                data-content="Comma separated list" data-placement="top" class="bi bi-info-circle"></i></span></h6>
-          <hr class="background-green" />
-          <div class="row">
-            <div class="col-12">
-              <label for="quick-urls" class="">URLS</label>
-              <textarea placeholder="Quick Menu Links" rows="6" id="quick-urls" class="form-control"></textarea>
-            </div>
-          </div>
+  <body>
+    <div class="container">
+      <div class="row mt-4 text-center">
+        <div class="col-md-4 offset-md-4">
+          <img src="img/pd_green_grey.png" height="100" alt="PlayerData logo" />
         </div>
       </div>
-      <div class="col-md-4 order-md-2">
-        <div class="col-md-12 border border-success rounded p-3">
-          <h6 class="mb-0 font-weight-bold">Quick Settings</h6>
-          <hr class="background-green" />
-          <div class="row">
-            <div class="col-6 align-self-center">
-              <h6 class="mb-0 font-weight-bold">Dark Mode</h6>
+      <div class="row mt-2 text-center">
+        <div class="col-md-4 offset-md-4">
+          <h3 class="card-title">PlayerData</h3>
+        </div>
+      </div>
+      <div class="row mt-4">
+        <div class="col-md-8 order-md-1">
+          <div class="col-md-12 border border-success rounded p-3">
+            <h6 class="mb-0 font-weight-bold">
+              Credentials
+              <span class="text-right"
+                ><i
+                  data-toggle="popover"
+                  data-content="Be careful to scope your tokens to only what's needed."
+                  data-placement="top"
+                  class="bi bi-info-circle"
+                ></i
+              ></span>
+            </h6>
+            <hr class="background-green" />
+            <div class="row">
+              <div class="col-12">
+                <label for="gh-pat" class=""
+                  >GitHub Personal Access Token</label
+                >
+                <input
+                  type="password"
+                  placeholder="GitHub Personal Access Token"
+                  id="gh-pat"
+                  class="form-control"
+                />
+              </div>
             </div>
-            <div class="col-6 text-right">
-              <div class="toggle">
-                <input id="toggle-darkmode" type="checkbox" />
-                <label for="toggle-darkmode" class="mb-0"></label>
+            <div class="row">
+              <div class="col-12 pt-3">
+                <label for="pd-pat" class=""
+                  >PagerDuty Personal Access Token</label
+                >
+                <input
+                  type="password"
+                  placeholder="PagerDuty Personal Access Token"
+                  id="pd-pat"
+                  class="form-control"
+                />
               </div>
             </div>
           </div>
-          <div class="row">
-            <div class="col-6 align-self-center">
-              <h6 class="mb-0 font-weight-bold">Mergefreeze</h6>
-            </div>
-            <div class="col-6 text-right">
-              <div class="toggle">
-                <input id="toggle-mergefreeze" type="checkbox" />
-                <label for="toggle-mergefreeze" class="mb-0"></label>
+          <div class="col-md-12 border border-success rounded p-3 mt-2">
+            <h6 class="mb-0 font-weight-bold">
+              PD Links (Popout)
+              <span class="text-right"
+                ><i
+                  data-toggle="popover"
+                  data-content="Comma separated list"
+                  data-placement="top"
+                  class="bi bi-info-circle"
+                ></i
+              ></span>
+            </h6>
+            <hr class="background-green" />
+            <div class="row">
+              <div class="col-12">
+                <div class="row">
+                  <div class="col-1">
+                    <label for="quick-urls" class="">URLS</label>
+                  </div>
+                  <div class="col-11">
+                    <i
+                      id="add-quick-url"
+                      class="bi bi-plus-square-fill cursor-pointer h4 text-success"
+                    ></i>
+                  </div>
+                </div>
+
+                <div id="quick-urls"></div>
+
+                <span
+                  id="save-quick-urls"
+                  class="btn btn-primary"
+                  href="#"
+                  role="button"
+                >
+                  Save
+                </span>
               </div>
             </div>
           </div>
-          <div class="row">
-            <div class="col-6 align-self-center">
-              <h6 class="mb-0 font-weight-bold">Motivation</h6>
+        </div>
+        <div class="col-md-4 order-md-2">
+          <div class="col-md-12 border border-success rounded p-3">
+            <h6 class="mb-0 font-weight-bold">Quick Settings</h6>
+            <hr class="background-green" />
+            <div class="row">
+              <div class="col-6 align-self-center">
+                <h6 class="mb-0 font-weight-bold">Dark Mode</h6>
+              </div>
+              <div class="col-6 text-right">
+                <div class="toggle">
+                  <input id="toggle-darkmode" type="checkbox" />
+                  <label for="toggle-darkmode" class="mb-0"></label>
+                </div>
+              </div>
             </div>
-            <div class="col-6 text-right">
-              <div class="toggle">
-                <input id="toggle-motivation" type="checkbox" />
-                <label for="toggle-motivation" class="mb-0"></label>
+            <div class="row">
+              <div class="col-6 align-self-center">
+                <h6 class="mb-0 font-weight-bold">Mergefreeze</h6>
+              </div>
+              <div class="col-6 text-right">
+                <div class="toggle">
+                  <input id="toggle-mergefreeze" type="checkbox" />
+                  <label for="toggle-mergefreeze" class="mb-0"></label>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-6 align-self-center">
+                <h6 class="mb-0 font-weight-bold">Motivation</h6>
+              </div>
+              <div class="col-6 text-right">
+                <div class="toggle">
+                  <input id="toggle-motivation" type="checkbox" />
+                  <label for="toggle-motivation" class="mb-0"></label>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-  <script src="js/lib/jquery.min.js"></script>
-  <script src="js/lib/popper.min.js"></script>
-  <script src="js/lib/bootstrap.min.js"></script>
-  <script src="js/lib/draggable.js"></script>
-  <script src="js/options.js"></script>
-  <script src="js/showpopup.js"></script>
-  <script src="js/dark_mode.js"></script>
-</body>
-
+    <script src="js/lib/jquery.min.js"></script>
+    <script src="js/lib/popper.min.js"></script>
+    <script src="js/lib/bootstrap.min.js"></script>
+    <script src="js/lib/draggable.js"></script>
+    <script src="js/options.js"></script>
+    <script src="js/showpopup.js"></script>
+    <script src="js/dark_mode.js"></script>
+  </body>
 </html>

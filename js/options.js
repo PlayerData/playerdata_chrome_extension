@@ -1,5 +1,5 @@
 chrome.storage.sync.get(
-  ["ghPat", "pdPat", "quickLinks", "mergefreeze", "motivation"],
+  ["ghPat", "pdPat", "mergefreeze", "motivation"],
   function (result) {
     // Text option setters
     if (result.ghPat) {
@@ -8,10 +8,6 @@ chrome.storage.sync.get(
     if (result.pdPat) {
       $("#pd-pat").val(result.pdPat);
     }
-    if (result.quickLinks) {
-      $("#quick-urls").val(result.quickLinks);
-    }
-
     // Toggle options setters
     if (result.mergefreeze)
       document
@@ -23,11 +19,54 @@ chrome.storage.sync.get(
         .setAttribute("checked", "checked");
   }
 );
+var quickLinksCnt = 0;
 
+function setQuickLinksFields() {
+  var quickLinks = [];
+  const elements = document.getElementsByClassName("quick-url-field");
+  for (var i = 0; i < elements.length; i++) {
+    const inputs = elements[i].getElementsByTagName("input");
+    quickLinks.push({
+      name: inputs[0].value,
+      url: inputs[1].value,
+      order: elements[i].id.replace("quick-url-", ""),
+    });
+  }
+
+  chrome.storage.sync.set({ quickLinks });
+}
+
+function renderQuickLinkField(field) {
+  return `<div id="quick-url-${field.order}" class="input-group mb-3 quick-url-field">
+  <span class="input-group-text">name</span>
+  <input type="text" class="form-control" value="${field.name}" aria-label="Username">
+  <span class="input-group-text">url</span>
+  <input type="text" class="form-control" value="${field.url}" aria-label="Server">
+</div>`;
+}
+
+function renderQuickLinks() {
+  chrome.storage.sync.get(["quickLinks"], (result) => {
+    var quickUrlsHTML = "";
+    for (var i = 0; i < result.quickLinks.length; i++) {
+      quickUrlsHTML += renderQuickLinkField(result.quickLinks[i]);
+      quickLinksCnt++;
+    }
+    document.getElementById("quick-urls").innerHTML = quickUrlsHTML;
+  });
+}
 // Text option setters
 document.addEventListener("DOMContentLoaded", function () {
-  $("#quick-urls").keyup(function (e) {
-    chrome.storage.sync.set({ quickLinks: e.target.value });
+  renderQuickLinks();
+  $("#add-quick-url").click(function () {
+    document.getElementById("quick-urls").innerHTML += renderQuickLinkField({
+      name: "",
+      url: "",
+      order: quickLinksCnt,
+    });
+  });
+  $("#save-quick-urls").click(function () {
+    setQuickLinksFields();
   });
   $("#gh-pat").keyup(function (e) {
     chrome.storage.sync.set({ ghPat: e.target.value });
