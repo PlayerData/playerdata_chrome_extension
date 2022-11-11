@@ -59,11 +59,13 @@ function create_a_list_item(list_item, idx) {
   document.getElementById("list-group-" + idx).innerHTML += html;
 }
 
-function create_new_row(current_row) {
+function create_new_row(current_row, is_merge) {
   var new_id = `row-${current_row}`;
   var html = `<div id="${new_id}" class="row"></div>`;
-  document.getElementById("lists").innerHTML +=
-    '<div class="container">' + html + "</div>";
+  var element = is_merge
+    ? document.getElementById("merge-lists")
+    : document.getElementById("lists");
+  element.innerHTML += '<div class="container">' + html + "</div>";
   return new_id;
 }
 
@@ -88,15 +90,20 @@ function refresh_links() {
   current_row = 0;
   for (var idx = 0; idx < pdlists.length; idx++) {
     var the_list = pdlists[idx];
+    const is_merge = the_list.links.some((link) => link.type === "MERGE");
     var row_id = "row-" + current_row;
     if (the_list.row != current_row) {
-      row_id = create_new_row(the_list.row);
+      row_id = create_new_row(the_list.row, is_merge);
       current_row = the_list.row;
     }
     create_a_list(the_list, idx, row_id);
   }
 }
-
+chrome.storage.sync.get(["mergefreeze"], function (result) {
+  if(result.mergefreeze) {
+    document.getElementById("merge-lists").style.display = 'block';
+  }
+});
 
 document.addEventListener("DOMContentLoaded", function () {
   $("#gh_search").keyup(function (e) {
