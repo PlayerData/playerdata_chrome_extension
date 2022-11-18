@@ -86,3 +86,17 @@ body.dark-theme .form-control {
 .motivational-quote footer {
   text-align: right;
 }
+
+.gridley {
+  position: relative;
+}
+.brick.small {
+  border: 1px solid black;
+  width: 33%;
+  height: auto;
+}
+.brick.large {
+  border: 2px solid black;
+  width: 33%;
+  height: 300px;
+}

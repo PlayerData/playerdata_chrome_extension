@@ -94,6 +94,14 @@ document.addEventListener("DOMContentLoaded", function () {
   $("#pd-pat").keyup(function (e) {
     chrome.storage.sync.set({ pdPat: e.target.value });
   });
+  // $('.gridly input').on('click', function(event) {
+  //   $('.gridly').gridly('draggable', 'off');
+  // });
+  $('.gridly').gridly({
+    base: 60, // px
+    gutter: 5, // px
+    columns: 12
+  });
 });
 
 // Toggle options setters
@@ -102,4 +110,8 @@ document.getElementById("toggle-mergefreeze").addEventListener("input", (e) => {
 });
 document.getElementById("toggle-motivation").addEventListener("input", (e) => {
   chrome.storage.sync.set({ motivation: e.target.checked });
+});
+
+document.getElementById("toggle-drag-mode").addEventListener("input", (e) => {
+  $('.gridly').gridly('draggable', e.target.checked ? "on": "off")
 });

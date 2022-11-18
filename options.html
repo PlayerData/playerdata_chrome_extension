@@ -18,6 +18,7 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css"
     />
+    <link rel="stylesheet" href="css/lib/jquery.gridly.css" />
     <link rel="stylesheet" href="css/chrome_style.css" />
   </head>
 
@@ -81,7 +82,7 @@
               <span class="text-right"
                 ><i
                   data-toggle="popover"
-                  data-content="Comma separated list"
+                  data-content="The links that appear on the extension pop up menu"
                   data-placement="top"
                   class="bi bi-info-circle"
                 ></i
@@ -169,11 +170,67 @@
           </div>
         </div>
       </div>
+      <div class="row mt-4 border border-success rounded p-3">
+        <div class="col-md-12 mt-2">
+          <div class="row">
+            <div class="col-md-9">
+              <h6 class="mb-0 font-weight-bold">
+                New Page Links
+                <span class="text-right"
+                  ><i
+                    data-toggle="popover"
+                    data-content="The links that appear on the new tab"
+                    data-placement="top"
+                    class="bi bi-info-circle"
+                  ></i
+                ></span>
+              </h6>
+            </div>
+            <div class="col-md-2 text-right">
+              <h6 class="mb-0 font-weight-bold">Drag Mode</h6>
+            </div>
+            <div class="col-md-1">
+              <div class="toggle">
+                <input id="toggle-drag-mode" type="checkbox" />
+                <label for="toggle-drag-mode" class="mb-0"></label>
+              </div>
+            </div>
+          </div>
+          <hr class="background-green" />
+          <div class="row">
+            <div class="col-12 align-self-center">
+              <div class="gridly">
+                <div class="brick small">
+                  <div class="row">
+                    <div class="col-10">
+                      <input
+                        placeholder="Section Name"
+                        id="section-name"
+                        class="form-control"
+                      />
+                    </div>
+                    <div class="col-2">
+                      <i
+                        id="add-np-link-0"
+                        class="add-np-link bi bi-plus-square-fill cursor-pointer h4 text-success"
+                      ></i>
+                    </div>
+                  </div>
+                  <hr class="background-green" />
+
+                </div>
+                <div class="brick large"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
     <script src="js/lib/jquery.min.js"></script>
     <script src="js/lib/popper.min.js"></script>
     <script src="js/lib/bootstrap.min.js"></script>
     <script src="js/lib/draggable.js"></script>
+    <script src="js/lib/jquery.gridly.js"></script>
     <script src="js/options.js"></script>
     <script src="js/showpopup.js"></script>
     <script src="js/dark_mode.js"></script>
