@@ -6,6 +6,8 @@ chrome.storage.sync.get(["quickLinks"], function (result) {
                 href="${result.quickLinks[i].url}">${result.quickLinks[i].name}</a>`;
     }
   }
+  if(!document.getElementById("quick-links")) return;
+
   document.getElementById("quick-links").innerHTML = linksHTML;
 });
 

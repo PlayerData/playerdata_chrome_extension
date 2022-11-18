@@ -34,18 +34,28 @@ function setQuickLinksFields() {
   }
 
   chrome.storage.sync.set({ quickLinks });
-  document.getElementById("quick-links-success-message").style.display = "block";
+  document.getElementById("quick-links-success-message").style.display =
+    "block";
   setTimeout(() => {
-    document.getElementById("quick-links-success-message").style.display = "none";
-  }, 5000)
+    document.getElementById("quick-links-success-message").style.display =
+      "none";
+  }, 5000);
 }
 
 function renderQuickLinkField(field) {
-  return `<div id="quick-url-${field.order}" class="input-group mb-3 quick-url-field">
+  return `<div class="row" id="quick-url-row-${field.order}">
+  <div class="col-11">
+  <div id="quick-url-${field.order}" class="input-group mb-3 quick-url-field">
   <span class="input-group-text">name</span>
   <input type="text" class="form-control" value="${field.name}" aria-label="Username">
   <span class="input-group-text">url</span>
   <input type="text" class="form-control" value="${field.url}" aria-label="Server">
+</div>
+</div>
+<div class="col-1">
+  <i id="remove-quick-link-${field.order}"
+   class="remove-quick-link bi bi-dash-square-fill cursor-pointer h4 text-danger"></i>
+</div>
 </div>`;
 }
 
@@ -57,6 +67,11 @@ function renderQuickLinks() {
       quickLinksCnt++;
     }
     document.getElementById("quick-urls").innerHTML = quickUrlsHTML;
+    $(".remove-quick-link").click(function () {
+      var id = $(this).attr("id").replace("remove-quick-link-", "");
+      var element = document.getElementById(`quick-url-row-${id}`);
+      element.parentNode.removeChild(element);
+    });
   });
 }
 // Text option setters
@@ -68,6 +83,7 @@ document.addEventListener("DOMContentLoaded", function () {
       url: "",
       order: quickLinksCnt,
     });
+
   });
   $("#save-quick-urls").click(function () {
     setQuickLinksFields();
