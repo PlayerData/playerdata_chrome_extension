@@ -1,10 +1,8 @@
-function get_repo_status(repo) {
-  if (!github_read_only_pat) return;
-
+function get_repo_status(repo, ghPat) {
   var url = `https://api.github.com/repos/playerdata/${repo}/commits/master/status`;
   var xhttp = new XMLHttpRequest();
   xhttp.open("GET", url, true);
-  xhttp.setRequestHeader("authorization", "token " + github_read_only_pat);
+  xhttp.setRequestHeader("authorization", "token " + ghPat);
   xhttp.onreadystatechange = function () {
     if (xhttp.readyState == 4) {
       var result = JSON.parse(xhttp.responseText);
@@ -48,7 +46,11 @@ function create_a_mergefreeze_item(list_item, idx) {
       `;
       // var html = `<a class="card" href="https://mergefreeze.com"> <span class="badge ${badge_type}"></span></a>`;
       document.getElementById("list-group-" + idx).innerHTML += html;
-      get_repo_status(list_item.name);
+      chrome.storage.sync.get(["ghPat"], function (result) {
+        if (result.ghPat) {
+          get_repo_status(list_item.name, result.ghPat);
+        }
+      });
     }
   };
   xhttp.send();
@@ -59,11 +61,13 @@ function create_a_list_item(list_item, idx) {
   document.getElementById("list-group-" + idx).innerHTML += html;
 }
 
-function create_new_row(current_row) {
+function create_new_row(current_row, is_merge) {
   var new_id = `row-${current_row}`;
   var html = `<div id="${new_id}" class="row"></div>`;
-  document.getElementById("lists").innerHTML +=
-    '<div class="container">' + html + "</div>";
+  var element = is_merge
+    ? document.getElementById("merge-lists")
+    : document.getElementById("lists");
+  element.innerHTML += '<div class="container">' + html + "</div>";
   return new_id;
 }
 
@@ -88,25 +92,25 @@ function refresh_links() {
   current_row = 0;
   for (var idx = 0; idx < pdlists.length; idx++) {
     var the_list = pdlists[idx];
+    const is_merge = the_list.links.some((link) => link.type === "MERGE");
     var row_id = "row-" + current_row;
     if (the_list.row != current_row) {
-      row_id = create_new_row(the_list.row);
+      row_id = create_new_row(the_list.row, is_merge);
       current_row = the_list.row;
     }
     create_a_list(the_list, idx, row_id);
   }
 }
-function search_kb() {
-  var search_term = $("#gh_search").val();
-  chrome.tabs.create({
-    url: "https://github.com/PlayerData/KB/search?q=" + search_term,
-  });
-}
+chrome.storage.sync.get(["mergefreeze"], function (result) {
+  if (result.mergefreeze) {
+    document.getElementById("merge-lists").style.display = "block";
+  }
+});
 
 document.addEventListener("DOMContentLoaded", function () {
   $("#gh_search").keyup(function (e) {
     if (e.keyCode == 13) {
-      search_kb();
+      search_kb("gh_search");
     }
   });
   refresh_links();

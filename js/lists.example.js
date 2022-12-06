@@ -1,12 +1,11 @@
 
 var github_read_only_pat="<INSERT KEY HERE>";
-var pager_duty_key="<INSERT KEY HERE>";
 var pdlists = [
     {
         "title": "Merge Freeze",
         "row": 1,
         "links": [
-            {"name": "App", "token": "<TOKEN>", "url": "https://www.mergefreeze.com/api/branches/PlayerData/app/master/"}
+            {"type": "MERGE", "name": "App", "token": "<TOKEN>", "url": "https://www.mergefreeze.com/api/branches/PlayerData/app/master/"}
         ]
     },
     {
