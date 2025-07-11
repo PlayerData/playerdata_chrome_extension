@@ -4,7 +4,12 @@ This project is to house any dashboard or metric based tooling that we can use t
 
 ## Glance
 
-See the [Glance README](glance/README.md) for details about the docker service app glance and our implementation.
+#### Setup
+
+1. Pull the repo
+2. Make sure Docker is running
+3. Copy the `.env.dev` file to `.env` and replace keys appropriately
+4. Run `./start-glance-with-extension.sh`
 
 ## Chrome Extension (Outdated)
 

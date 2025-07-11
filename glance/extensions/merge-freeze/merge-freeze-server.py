@@ -185,7 +185,7 @@ Last updated: {datetime.now().strftime('%H:%M:%S')}
 
             self.send_response(200)
             self.send_header('Content-Type', 'text/html; charset=utf-8')
-            self.send_header('Widget-Title', 'Merge Freeze Status')
+            self.send_header('Widget-Title', '❄️ Merge Freeze Status')
             self.send_header('Widget-Content-Type', 'html')
             self.end_headers()
 

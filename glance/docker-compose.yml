@@ -13,7 +13,6 @@ services:
       - GLANCE_CONFIG=/app/config/home.yml
       - GITHUB_KEY=${GITHUB_KEY}
       - PAGER_KEY=${PAGER_KEY}
-      - AQI_KEY=${AQI_KEY}
       - MERGE_APP_KEY=${MERGE_APP_KEY}
       - GITHUB_USERNAME=${GITHUB_USERNAME}
     networks:
@@ -21,7 +20,7 @@ services:
 
   merge-freeze-extension:
     build:
-      context: .
+      context: extensions/merge-freeze
       dockerfile: Dockerfile.extension
     ports:
       - "8081:8081"
