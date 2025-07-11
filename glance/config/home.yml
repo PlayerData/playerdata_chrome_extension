@@ -35,69 +35,31 @@
           hide-header: true
     - size: full
       widgets:
-        - type: split-column
-          max-columns: 2
-          widgets:
-            - type: custom-api
-              title: 🚨 PagerDuty Incidents
-              cache: 2m
-              hide-header: false
-              url: https://api.pagerduty.com/incidents?total=false&time_zone=UTC&statuses%5B%5D=triggered
-              headers:
-                accept: application/vnd.pagerduty+json;version=2
-                content-type: application/json
-                authorization: Token token=${PAGER_KEY}
-              template: |
-                {{ $incidents := .JSON.Array "incidents" }}
-                {{ if $incidents }}
-                  {{ range $incidents }}
-                    <div class="margin-block-1">
-                      <a href="{{ .String "html_url" }}" class="color-negative size-h4" style="text-decoration: none;">
-                        🔴 {{ .String "title" }}
-                      </a>
-                      <div class="size-h6 color-subtext">
-                        {{ .String "service.summary" }}
-                      </div>
-                    </div>
-                  {{ end }}
-                {{ else }}
-                  <div class="color-positive size-h4">✅ No Active Incidents</div>
-                {{ end }}
-            - type: custom-api
-              title: 👥 On-Call Schedule
-              cache: 5m
-              hide-header: false
-              url: https://api.pagerduty.com/oncalls?total=false&time_zone=UTC&escalation_policy_ids%5B%5D=PLEBQTR
-              headers:
-                accept: application/vnd.pagerduty+json;version=2
-                content-type: application/json
-                authorization: Token token=${PAGER_KEY}
-              template: |
-                {{ $oncalls := .JSON.Array "oncalls" }}
-                {{ if $oncalls }}
-                  {{ range $oncalls }}
-                    {{ if eq (.Int "escalation_level") 1 }}
-                      <div class="margin-block-1">
-                        <div class="color-primary size-h4">
-                          1️⃣ {{ .String "user.summary" }}
-                        </div>
-                        <div class="size-h6 color-subtext">Primary On-Call</div>
-                      </div>
-                    {{ end }}
-                  {{ end }}
-                  {{ range $oncalls }}
-                    {{ if eq (.Int "escalation_level") 2 }}
-                      <div class="margin-block-1">
-                        <div class="color-secondary size-h5">
-                          2️⃣ {{ .String "user.summary" }}
-                        </div>
-                        <div class="size-h6 color-subtext">Level 2 Escalation</div>
-                      </div>
-                    {{ end }}
-                  {{ end }}
-                {{ else }}
-                  <div class="color-subtext size-h5">No On-Call Data</div>
-                {{ end }}
+        - type: custom-api
+          title: 🚨 PagerDuty Incidents
+          cache: 2m
+          hide-header: false
+          url: https://api.pagerduty.com/incidents?total=false&time_zone=UTC&statuses%5B%5D=triggered
+          headers:
+            accept: application/vnd.pagerduty+json;version=2
+            content-type: application/json
+            authorization: Token token=${PAGER_KEY}
+          template: |
+            {{ $incidents := .JSON.Array "incidents" }}
+            {{ if $incidents }}
+              {{ range $incidents }}
+                <div class="margin-block-1">
+                  <a href="{{ .String "html_url" }}" class="color-negative size-h4" style="text-decoration: none;">
+                    🔴 {{ .String "title" }}
+                  </a>
+                  <div class="size-h6 color-subtext">
+                    {{ .String "service.summary" }}
+                  </div>
+                </div>
+              {{ end }}
+            {{ else }}
+              <div class="color-positive size-h4">✅ No Active Incidents</div>
+            {{ end }}
         - type: split-column
           max-columns: 2
           widgets:
@@ -139,6 +101,41 @@
                   url: https://sentry.io/organizations/playerdata-ltd/projects/
                 - title: Cloud Logs
                   url: https://console.cloud.google.com/logs/query?project=playerdata-infrastructure-prod
+        - type: custom-api
+          title: 👥 On-Call Schedule
+          cache: 5m
+          hide-header: false
+          url: https://api.pagerduty.com/oncalls?total=false&time_zone=UTC&escalation_policy_ids%5B%5D=PLEBQTR
+          headers:
+            accept: application/vnd.pagerduty+json;version=2
+            content-type: application/json
+            authorization: Token token=${PAGER_KEY}
+          template: |
+            {{ $oncalls := .JSON.Array "oncalls" }}
+            {{ if $oncalls }}
+              {{ range $oncalls }}
+                {{ if eq (.Int "escalation_level") 1 }}
+                  <div class="margin-block-1">
+                    <div class="color-primary size-h4">
+                      1️⃣ {{ .String "user.summary" }}
+                    </div>
+                    <div class="size-h6 color-subtext">Primary On-Call</div>
+                  </div>
+                {{ end }}
+              {{ end }}
+              {{ range $oncalls }}
+                {{ if eq (.Int "escalation_level") 2 }}
+                  <div class="margin-block-1">
+                    <div class="color-secondary size-h5">
+                      2️⃣ {{ .String "user.summary" }}
+                    </div>
+                    <div class="size-h6 color-subtext">Level 2 Escalation</div>
+                  </div>
+                {{ end }}
+              {{ end }}
+            {{ else }}
+              <div class="color-subtext size-h5">No On-Call Data</div>
+            {{ end }}
         - type: extension
           title: ❄️ Merge Freeze Status
           url: http://merge-freeze-extension:8081
