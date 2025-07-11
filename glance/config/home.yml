@@ -117,13 +117,23 @@
                 {{ else }}
                   <div class="color-subtext size-h5">No On-Call Data</div>
                 {{ end }}
-        - type: rss
-          title: 📋 My Open Pull Requests
-          limit: 10
-          cache: 1m
-          feeds:
-            - url: http://github-pr-scraper:8086/my-open-prs.xml
-              title: My PRs
+        - type: split-column
+          max-columns: 2
+          widgets:
+            - type: rss
+              title: 📝 My Open Pull Requests
+              limit: 10
+              cache: 1m
+              feeds:
+                - url: http://github-pr-scraper:8086/my-open-prs.xml
+                  title: Authored by Me
+            - type: rss
+              title: 👀 PRs to Review
+              limit: 10
+              cache: 1m
+              feeds:
+                - url: http://github-pr-scraper:8086/assigned-prs.xml
+                  title: Assigned to Me
         - type: repository
           repository: PlayerData/roadmap
           token: ${GITHUB_KEY}
