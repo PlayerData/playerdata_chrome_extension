@@ -3,9 +3,10 @@ server:
   port: 8085
 
 theme:
-  # Note: assets are cached by the browser, changes to the CSS file
-  # will not be reflected until the browser cache is cleared (Ctrl+F5)
-  custom-css-file: /assets/user.css
+  background-color: 220 5 10
+  primary-color: 132 100 47
+  negative-color: 358 72 52
+  contrast-multiplier: 1.4
 
 pages:
   # It's not necessary to create a new file for each page and include it, you can simply
