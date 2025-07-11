@@ -22,6 +22,7 @@ class MergeFreezeHandler(BaseHTTPRequestHandler):
                 {"name": "web", "url": "https://www.mergefreeze.com/api/branches/PlayerData/web/master/"},
                 {"name": "analysis-services", "url": "https://www.mergefreeze.com/api/branches/PlayerData/analysis-services/master/"},
                 {"name": "actions", "url": "https://www.mergefreeze.com/api/branches/PlayerData/actions/main/"},
+                {"name": "kubernetes", "url": "https://www.mergefreeze.com/api/branches/PlayerData/kubernetes/master/"},
             ]
 
             # Get access token from environment

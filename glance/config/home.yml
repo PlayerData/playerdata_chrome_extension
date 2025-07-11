@@ -140,6 +140,7 @@
                 - title: Cloud Logs
                   url: https://console.cloud.google.com/logs/query?project=playerdata-infrastructure-prod
         - type: extension
+          title: ❄️ Merge Freeze Status
           url: http://merge-freeze-extension:8081
-          cache: 2m
+          cache: 10m
           allow-potentially-dangerous-html: true

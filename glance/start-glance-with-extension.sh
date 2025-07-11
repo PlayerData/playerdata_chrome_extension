@@ -83,6 +83,7 @@ if docker ps --format "table {{.Names}}\t{{.Status}}" | grep -E "(glance|merge-f
     echo "🔒 Extension Status: http://localhost:8081"
     echo "🏥 Extension Health: http://localhost:8081/health"
     echo "📡 RSS Feed: http://localhost:8086/my-open-prs.xml"
+    echo "📡 RSS Feed: http://localhost:8086/assigned-prs.xml"
     echo ""
     echo "To stop the services, run: docker compose down"
 else

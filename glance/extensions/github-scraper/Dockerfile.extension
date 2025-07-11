@@ -2,10 +2,10 @@ FROM python:3.11-alpine
 
 WORKDIR /app
 
-COPY extensions/requirements.txt .
+COPY ../requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY extensions/github-scraper/github-pr-scraper.py .
+COPY github-pr-scraper.py .
 
 EXPOSE 8086
 
