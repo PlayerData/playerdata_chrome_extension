@@ -8,6 +8,11 @@ theme:
   negative-color: 358 72 52
   contrast-multiplier: 1.4
 
+branding:
+  logo-url: /assets/logo.png
+  favicon-url: /assets/logo.png
+  app-icon-url: "/assets/logo.png"
+
 pages:
   # It's not necessary to create a new file for each page and include it, you can simply
   # put its contents here, though multiple pages are easier to manage when separated
