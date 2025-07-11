@@ -1,0 +1,151 @@
+- name: Home
+  width: wide
+  head-widgets:
+    - type: split-column
+      max-columns: 6
+      widgets:
+        - type: repository
+          repository: PlayerData/analysis-services
+          token: ${GITHUB_KEY}
+          pull-requests-limit: 2
+          issues-limit: 2
+          hide-header: true
+        - type: repository
+          repository: PlayerData/playerdata-core
+          token: ${GITHUB_KEY}
+          pull-requests-limit: 2
+          issues-limit: 2
+          hide-header: true
+        - type: repository
+          repository: PlayerData/app
+          token: ${GITHUB_KEY}
+          pull-requests-limit: 2
+          issues-limit: 2
+          hide-header: true
+        - type: repository
+          repository: PlayerData/api
+          token: ${GITHUB_KEY}
+          pull-requests-limit: 2
+          issues-limit: 2
+          hide-header: true
+        - type: repository
+          repository: PlayerData/web
+          token: ${GITHUB_KEY}
+          pull-requests-limit: 2
+          issues-limit: 2
+          hide-header: true
+  # Optionally, if you only have a single page you can hide the desktop navigation for a cleaner look
+  # hide-desktop-navigation: true
+  columns:
+    - size: full
+      widgets:
+        - type: split-column
+          max-columns: 3
+          widgets:
+            - type: repository
+              repository: PlayerData/roadmap
+              token: ${GITHUB_KEY}
+              pull-requests-limit: -1
+              issues-limit: 10
+              hide-header: true
+        - type: group
+          widgets:
+            - type: rss
+              limit: 10
+              collapse-after: 3
+              cache: 12h
+              feeds:
+                - url: https://selfh.st/rss/
+                  title: selfh.st
+                - url: https://ciechanow.ski/atom.xml
+                - url: https://www.joshwcomeau.com/rss.xml
+                  title: Josh Comeau
+                - url: https://samwho.dev/rss.xml
+                - url: https://ishadeed.com/feed.xml
+                  title: Ahmad Shadeed
+            - type: hacker-news
+            - type: lobsters
+
+        - type: videos
+          channels:
+            - UCXuqSBlHAE6Xw-yeJA0Tunw # Linus Tech Tips
+            - UCR-DXc1voovS8nhAvccRZhg # Jeff Geerling
+            - UCsBjURrPoezykLs9EqgamOA # Fireship
+            - UCBJycsmduvYEL83R_U4JriQ # Marques Brownlee
+            - UCHnyfMqiRRG1u-2MsSQLbXA # Veritasium
+
+        - type: group
+          widgets:
+            - type: reddit
+              subreddit: technology
+              show-thumbnails: true
+            - type: reddit
+              subreddit: selfhosted
+              show-thumbnails: true
+
+    - size: small
+      widgets:
+        - type: weather
+          location: Chorley, United Kingdom
+          units: metric # alternatively "imperial"
+          hour-format: 12h # alternatively "24h"
+          # Optionally hide the location from being displayed in the widget
+          # hide-location: true
+        - type: custom-api
+          title: Air Quality
+          cache: 10m
+          hide-header: true
+          url: https://api.waqi.info/feed/geo:53.6535;2.6326/?token=${AQI_KEY}
+          template: |
+            {{ $aqi := printf "%03s" (.JSON.String "data.aqi") }}
+            {{ $aqiraw := .JSON.String "data.aqi" }}
+            {{ $updated := .JSON.String "data.time.iso" }}
+            {{ $humidity := .JSON.String "data.iaqi.h.v" }}
+            {{ $ozone := .JSON.String "data.iaqi.o3.v" }}
+            {{ $pm25 := .JSON.String "data.iaqi.pm25.v" }}
+            {{ $pressure := .JSON.String "data.iaqi.p.v" }}
+
+            <div class="flex justify-between">
+              <div class="size-h5">
+                {{ if le $aqi "050" }}
+                  <div class="color-positive">Good air quality</div>
+                {{ else if le $aqi "100" }}
+                  <div class="color-primary">Moderate air quality</div>
+                {{ else }}
+                  <div class="color-negative">Bad air quality</div>
+                {{ end }}
+              </div>
+            </div>
+
+            <div class="color-highlight size-h2">AQI: {{ $aqiraw }}</div>
+            <div style="border-bottom: 1px solid; margin-block: 10px;"></div>
+
+            <div class="margin-block-2">
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+
+                <div>
+                  <div class="size-h3 color-highlight">{{ $humidity }}%</div>
+                  <div class="size-h6">HUMIDITY</div>
+                </div>
+
+                <div>
+                  <div class="size-h3 color-highlight">{{ $ozone }} μg/m³</div>
+                  <div class="size-h6">OZONE</div>
+                </div>
+
+                <div>
+                  <div class="size-h3 color-highlight">{{ $pm25 }} μg/m³</div>
+                  <div class="size-h6">PM2.5</div>
+                </div>
+
+                <div>
+                  <div class="size-h3 color-highlight">{{ $pressure }} hPa</div>
+                  <div class="size-h6">PRESSURE</div>
+                </div>
+
+              </div>
+
+              <div class="size-h6" style="margin-top: 10px;">Last Updated at {{ slice $updated 11 16 }}</div>
+            </div>
+        - type: calendar
+          first-day-of-week: monday
