@@ -18,7 +18,10 @@ class GitHubPRHandler(BaseHTTPRequestHandler):
                 self.send_health_response()
                 return
             elif self.path == '/my-open-prs.xml':
-                self.send_rss_response()
+                self.send_rss_response('authored')
+                return
+            elif self.path == '/assigned-prs.xml':
+                self.send_rss_response('assigned')
                 return
             else:
                 self.send_response(404)
@@ -58,8 +61,8 @@ class GitHubPRHandler(BaseHTTPRequestHandler):
                 'error': str(e)[:50]
             }
 
-    def fetch_open_pull_requests(self, username, github_token):
-        """Fetch user's open pull requests from PlayerData organization"""
+    def fetch_pull_requests(self, username, github_token, pr_type):
+        """Fetch pull requests based on type (authored or assigned)"""
         try:
             headers = {
                 'Authorization': f'Bearer {github_token}',
@@ -67,7 +70,13 @@ class GitHubPRHandler(BaseHTTPRequestHandler):
                 'Accept': 'application/vnd.github.v3+json'
             }
             
-            search_query = f'is:pr is:open author:{username} org:PlayerData'
+            if pr_type == 'authored':
+                search_query = f'is:pr is:open author:{username} org:PlayerData'
+            elif pr_type == 'assigned':
+                search_query = f'is:pr is:open review-requested:{username} org:PlayerData'
+            else:
+                raise ValueError(f"Invalid PR type: {pr_type}")
+            
             encoded_query = quote(search_query)
             
             response = requests.get(
@@ -80,29 +89,37 @@ class GitHubPRHandler(BaseHTTPRequestHandler):
                 data = response.json()
                 prs = data.get('items', [])
                 
-                # Process PRs to extract relevant information
-                processed_prs = []
-                for pr in prs:
-                    repo_url_parts = pr.get('repository_url', '').split('/')
-                    repo_name = repo_url_parts[-1] if repo_url_parts else 'unknown'
-                    repo_owner = repo_url_parts[-2] if len(repo_url_parts) > 1 else 'unknown'
-                    
-                    processed_prs.append({
-                        'title': pr.get('title', 'No title'),
-                        'url': pr.get('html_url', ''),
-                        'repo_name': repo_name,
-                        'repo_owner': repo_owner,
-                        'full_repo_name': f'{repo_owner}/{repo_name}',
-                        'created_at': pr.get('created_at', ''),
-                        'updated_at': pr.get('updated_at', ''),
-                        'state': pr.get('state', 'unknown'),
-                        'body': pr.get('body', ''),
-                        'labels': [label.get('name', '') for label in pr.get('labels', [])]
-                    })
+                # Process PRs based on type
+                if pr_type == 'assigned':
+                    # For assigned PRs, use batch processing to check individual assignments
+                    processed_prs = self.batch_check_reviewers(prs, username, headers)
+                else:
+                    # For authored PRs, process normally
+                    processed_prs = []
+                    for pr in prs:
+                        repo_url_parts = pr.get('repository_url', '').split('/')
+                        repo_name = repo_url_parts[-1] if repo_url_parts else 'unknown'
+                        repo_owner = repo_url_parts[-2] if len(repo_url_parts) > 1 else 'unknown'
+                        author = pr.get('user', {}).get('login', 'unknown') if pr.get('user') else 'unknown'
+                        
+                        processed_prs.append({
+                            'title': pr.get('title', 'No title'),
+                            'url': pr.get('html_url', ''),
+                            'repo_name': repo_name,
+                            'repo_owner': repo_owner,
+                            'full_repo_name': f'{repo_owner}/{repo_name}',
+                            'created_at': pr.get('created_at', ''),
+                            'updated_at': pr.get('updated_at', ''),
+                            'state': pr.get('state', 'unknown'),
+                            'body': pr.get('body', ''),
+                            'labels': [label.get('name', '') for label in pr.get('labels', [])],
+                            'author': author,
+                            'number': pr.get('number')
+                        })
                 
                 return {
                     'prs': processed_prs,
-                    'total_count': data.get('total_count', 0),
+                    'total_count': len(processed_prs),  # Updated count after filtering
                     'status': 'success'
                 }
             else:
@@ -121,15 +138,93 @@ class GitHubPRHandler(BaseHTTPRequestHandler):
                 'error': str(e)[:50]
             }
 
-    def generate_rss_feed(self, prs, username):
+    def batch_check_reviewers(self, prs, username, headers):
+        """Batch check reviewer assignments for multiple PRs efficiently"""
+        processed_prs = []
+        
+        # Use ThreadPoolExecutor for concurrent API calls
+        with ThreadPoolExecutor(max_workers=3) as executor:  # Limit concurrent requests
+            # Submit all reviewer check requests
+            future_to_pr = {}
+            for pr in prs:
+                repo_url_parts = pr.get('repository_url', '').split('/')
+                repo_name = repo_url_parts[-1] if repo_url_parts else 'unknown'
+                repo_owner = repo_url_parts[-2] if len(repo_url_parts) > 1 else 'unknown'
+                pr_number = pr.get('number')
+                
+                if pr_number:
+                    future = executor.submit(self.check_single_reviewer, repo_owner, repo_name, pr_number, username, headers)
+                    future_to_pr[future] = pr
+            
+            # Collect results with timeout
+            for future in as_completed(future_to_pr, timeout=30):  # 30 second total timeout
+                try:
+                    is_assigned = future.result(timeout=5)
+                    pr = future_to_pr[future]
+                    
+                    if is_assigned:
+                        # Process this PR since user is assigned
+                        repo_url_parts = pr.get('repository_url', '').split('/')
+                        repo_name = repo_url_parts[-1] if repo_url_parts else 'unknown'
+                        repo_owner = repo_url_parts[-2] if len(repo_url_parts) > 1 else 'unknown'
+                        author = pr.get('user', {}).get('login', 'unknown') if pr.get('user') else 'unknown'
+                        
+                        processed_prs.append({
+                            'title': pr.get('title', 'No title'),
+                            'url': pr.get('html_url', ''),
+                            'repo_name': repo_name,
+                            'repo_owner': repo_owner,
+                            'full_repo_name': f'{repo_owner}/{repo_name}',
+                            'created_at': pr.get('created_at', ''),
+                            'updated_at': pr.get('updated_at', ''),
+                            'state': pr.get('state', 'unknown'),
+                            'body': pr.get('body', ''),
+                            'labels': [label.get('name', '') for label in pr.get('labels', [])],
+                            'author': author,
+                            'number': pr.get('number')
+                        })
+                        
+                except Exception as e:
+                    print(f"Error processing PR check: {e}")
+                    continue
+        
+        return processed_prs
+
+    def check_single_reviewer(self, repo_owner, repo_name, pr_number, username, headers):
+        """Check if the user is specifically assigned as a reviewer for a single PR"""
+        try:
+            pr_url = f'https://api.github.com/repos/{repo_owner}/{repo_name}/pulls/{pr_number}'
+            response = requests.get(pr_url, headers=headers, timeout=3)  # Short timeout
+            
+            if response.status_code == 200:
+                pr_data = response.json()
+                requested_reviewers = pr_data.get('requested_reviewers', [])
+                return any(reviewer.get('login') == username for reviewer in requested_reviewers)
+            else:
+                return False
+                
+        except Exception:
+            return False  # Be conservative on errors
+
+    def generate_rss_feed(self, prs, username, pr_type):
         """Generate RSS feed from pull requests"""
         # Create root RSS element
         rss = ET.Element('rss', version='2.0')
         channel = ET.SubElement(rss, 'channel')
         
-        # Channel metadata
-        ET.SubElement(channel, 'title').text = f"{username}'s Open Pull Requests"
-        ET.SubElement(channel, 'description').text = f"Open pull requests authored by {username}"
+        # Channel metadata based on type
+        if pr_type == 'authored':
+            title = f"{username}'s Open Pull Requests"
+            description = f"Open pull requests authored by {username}"
+        elif pr_type == 'assigned':
+            title = f"PRs Requesting Review from {username}"
+            description = f"Open pull requests requesting review from {username}"
+        else:
+            title = f"{username}'s Pull Requests"
+            description = f"Pull requests for {username}"
+            
+        ET.SubElement(channel, 'title').text = title
+        ET.SubElement(channel, 'description').text = description
         ET.SubElement(channel, 'link').text = "https://github.com/pulls"
         ET.SubElement(channel, 'lastBuildDate').text = datetime.now().isoformat()
         ET.SubElement(channel, 'generator').text = "GitHub PR Scraper"
@@ -156,6 +251,7 @@ class GitHubPRHandler(BaseHTTPRequestHandler):
             # Create description
             description = f"""
 <strong>Repository:</strong> {pr['full_repo_name']}<br/>
+<strong>Author:</strong> {pr['author']}<br/>
 <strong>Status:</strong> {pr['state']}<br/>
 <strong>Created:</strong> {created_date}<br/>
 <strong>Updated:</strong> {updated_date}<br/>
@@ -172,7 +268,7 @@ class GitHubPRHandler(BaseHTTPRequestHandler):
         xml_str = ET.tostring(rss, encoding='unicode')
         return f'<?xml version="1.0" encoding="UTF-8"?>\n{xml_str}'
 
-    def send_rss_response(self):
+    def send_rss_response(self, pr_type):
         """Generate and send RSS feed response"""
         try:
             # Get GitHub credentials from environment
@@ -192,14 +288,14 @@ class GitHubPRHandler(BaseHTTPRequestHandler):
                 github_username = user_result['username']
             
             # Fetch pull requests
-            pr_result = self.fetch_open_pull_requests(github_username, github_token)
+            pr_result = self.fetch_pull_requests(github_username, github_token, pr_type)
             
             if pr_result['status'] != 'success':
                 self.send_error_rss_response(f"Failed to fetch PRs: {pr_result.get('error', 'Unknown error')}")
                 return
             
             # Generate RSS feed
-            rss_content = self.generate_rss_feed(pr_result['prs'], github_username)
+            rss_content = self.generate_rss_feed(pr_result['prs'], github_username, pr_type)
             
             # Send response
             self.send_response(200)
@@ -211,7 +307,7 @@ class GitHubPRHandler(BaseHTTPRequestHandler):
             
             self.wfile.write(rss_content.encode('utf-8'))
             
-            print(f"Generated RSS feed with {len(pr_result['prs'])} PRs for {github_username}")
+            print(f"Generated {pr_type} RSS feed with {len(pr_result['prs'])} PRs for {github_username}")
             
         except Exception as e:
             print(f"Error generating RSS response: {e}")
@@ -277,7 +373,8 @@ if __name__ == '__main__':
     server_address = ('0.0.0.0', 8086)
     httpd = ThreadedHTTPServer(server_address, GitHubPRHandler)
     print(f"GitHub PR Scraper server running on http://{server_address[0]}:{server_address[1]}")
-    print(f"RSS feed available at: http://{server_address[0]}:{server_address[1]}/my-open-prs.xml")
+    print(f"Authored PRs RSS feed: http://{server_address[0]}:{server_address[1]}/my-open-prs.xml")
+    print(f"Assigned PRs RSS feed: http://{server_address[0]}:{server_address[1]}/assigned-prs.xml")
     print(f"Health check at: http://{server_address[0]}:{server_address[1]}/health")
     try:
         httpd.serve_forever()

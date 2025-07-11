@@ -103,10 +103,11 @@ docker-compose restart merge-freeze-extension
 - `GET /health` - Health check endpoint (returns JSON)
 
 ### GitHub PR Scraper (Port 8086)
-- `GET /my-open-prs.xml` - RSS feed of open pull requests
+- `GET /my-open-prs.xml` - RSS feed of pull requests authored by you
+- `GET /assigned-prs.xml` - RSS feed of pull requests assigned to you for review
 - `GET /health` - Health check endpoint (returns JSON)
-- Generates RSS feed on-demand from GitHub API
-- Filters by author and PlayerData organization
+- Generates RSS feeds on-demand from GitHub API
+- Filters by PlayerData organization
 
 ## Repositories Monitored
 
