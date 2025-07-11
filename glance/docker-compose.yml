@@ -13,7 +13,6 @@ services:
       - GLANCE_CONFIG=/app/config/home.yml
       - GITHUB_KEY=${GITHUB_KEY}
       - PAGER_KEY=${PAGER_KEY}
-      - AQI_KEY=${AQI_KEY}
       - MERGE_APP_KEY=${MERGE_APP_KEY}
       - GITHUB_USERNAME=${GITHUB_USERNAME}
     networks:
