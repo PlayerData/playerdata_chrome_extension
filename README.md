@@ -11,7 +11,7 @@ This project is to house any dashboard or metric based tooling that we can use t
 3. Copy the `.env.dev` file to `.env` and replace keys appropriately
 4. Run `./start-glance-with-extension.sh`
 
-You will need https://chromewebstore.google.com/detail/custom-new-tab-url/mmjbdbjnoablegbkcklggeknkfcjkjia to set it as your new tab page as Chrome as pull the ability to..
+You will need https://chromewebstore.google.com/detail/custom-new-tab-url/mmjbdbjnoablegbkcklggeknkfcjkjia to set it as your new tab page as Chrome has pulled the ability to..
 
 ## Chrome Extension (Outdated)
 
