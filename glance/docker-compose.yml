@@ -20,7 +20,7 @@ services:
 
   merge-freeze-extension:
     build:
-      context: .
+      context: extensions/merge-freeze
       dockerfile: Dockerfile.extension
     ports:
       - "8081:8081"

@@ -71,16 +71,18 @@ else
 fi
 
 # Wait for services to start
+echo ""
 echo "⏳ Waiting for services to start..."
 sleep 5
 
 # Check if services are running
-if docker ps --format "table {{.Names}}\t{{.Status}}" | grep -E "(glance|merge-freeze)"; then
+if docker ps --format "table {{.Names}}\t{{.Status}}" | grep -E "(glance|merge-freeze|github-pr-scraper)"; then
     echo "✅ Services are running!"
     echo ""
-    echo "📊 Glance Dashboard: http://localhost:8080"
+    echo "📊 Glance Dashboard: http://localhost:8085"
     echo "🔒 Extension Status: http://localhost:8081"
     echo "🏥 Extension Health: http://localhost:8081/health"
+    echo "📡 RSS Feed: http://localhost:8086/my-open-prs.xml"
     echo ""
     echo "To stop the services, run: docker compose down"
 else
