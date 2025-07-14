@@ -39,4 +39,4 @@ The extension requires the following environment variable:
 
 ## Usage
 
-The extension is automatically started via Docker Compose when running the main Glance application. It serves on port 8081 and provides data to the Glance dashboard.
+The extension is automatically started via Docker Compose when running the main Glance application. It serves on port 8086 and provides data to the Glance dashboard.

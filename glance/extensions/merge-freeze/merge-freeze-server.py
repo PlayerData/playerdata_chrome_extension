@@ -1,12 +1,14 @@
 #!/usr/bin/env python3
-import os
 import json
-from datetime import datetime
-from http.server import BaseHTTPRequestHandler, HTTPServer
-import requests
+import os
 import socketserver
 import threading
 from concurrent.futures import ThreadPoolExecutor, as_completed
+from datetime import datetime
+from http.server import BaseHTTPRequestHandler, HTTPServer
+
+import requests
+
 
 class MergeFreezeHandler(BaseHTTPRequestHandler):
     def do_GET(self):
@@ -171,7 +173,7 @@ class MergeFreezeHandler(BaseHTTPRequestHandler):
         html += f'''</ul>
 <hr class="margin-block-10">
 <div class="size-h6 color-subdue">
-Last updated: {datetime.now().strftime('%H:%M:%S')}
+Last updated: {datetime.now().strftime('%H:%M:%S')} UTC
 </div>
 </div>'''
 
@@ -213,7 +215,7 @@ class ThreadedHTTPServer(socketserver.ThreadingMixIn, HTTPServer):
 
 if __name__ == '__main__':
     # Bind to 0.0.0.0 for Docker container compatibility
-    server_address = ('0.0.0.0', 8081)
+    server_address = ('0.0.0.0', 8086)
     httpd = ThreadedHTTPServer(server_address, MergeFreezeHandler)
     print(f"Merge Freeze Extension server running on http://{server_address[0]}:{server_address[1]}")
     try:
