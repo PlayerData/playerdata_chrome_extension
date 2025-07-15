@@ -7,6 +7,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY extensions/github-scraper/github-pr-scraper.py .
 
-EXPOSE 8086
+EXPOSE 8087
 
 CMD ["python", "github-pr-scraper.py"]

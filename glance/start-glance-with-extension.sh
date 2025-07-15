@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "🚀 Starting Glance with Merge Freeze Extension..."
+echo "🚀 Starting Glance with Extensions..."
 
 # Check if services are already running and stop them if needed
 if docker ps --format "table {{.Names}}\t{{.Status}}" | grep -E "(glance|merge-freeze)" >/dev/null 2>&1; then
@@ -76,14 +76,16 @@ echo "⏳ Waiting for services to start..."
 sleep 5
 
 # Check if services are running
-if docker ps --format "table {{.Names}}\t{{.Status}}" | grep -E "(glance|merge-freeze|github-pr-scraper)"; then
+if docker ps --format "table {{.Names}}\t{{.Status}}" | grep -E "(glance|merge-freeze|github-pr-scraper|incident-timer)"; then
     echo "✅ Services are running!"
     echo ""
     echo "📊 Glance Dashboard: http://localhost:8085"
-    echo "🔒 Extension Status: http://localhost:8081"
-    echo "🏥 Extension Health: http://localhost:8081/health"
-    echo "📡 RSS Feed: http://localhost:8086/my-open-prs.xml"
-    echo "📡 RSS Feed: http://localhost:8086/assigned-prs.xml"
+    echo "🔒 Extension Status: http://localhost:8086"
+    echo "🏥 Extension Health: http://localhost:8086/health"
+    echo "📡 RSS Feed: http://localhost:8087/my-open-prs.xml"
+    echo "📡 RSS Feed: http://localhost:8087/assigned-prs.xml"
+    echo "⏱️ Incident Timer: http://localhost:8088"
+    echo "🏥 Incident Timer Health: http://localhost:8088/health"
     echo ""
     echo "To stop the services, run: docker compose down"
 else

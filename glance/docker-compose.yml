@@ -6,6 +6,7 @@ services:
     depends_on:
       - merge-freeze-extension
       - github-pr-scraper
+      - incident-timer-extension
     volumes:
       - ./config:/app/config:ro
       - ./assets:/app/assets:ro
@@ -23,7 +24,7 @@ services:
       context: .
       dockerfile: extensions/merge-freeze/Dockerfile.extension
     ports:
-      - "8081:8081"
+      - "8086:8086"
     environment:
       - MERGE_APP_KEY=${MERGE_APP_KEY}
       - GITHUB_KEY=${GITHUB_KEY}
@@ -33,7 +34,7 @@ services:
           "CMD",
           "python",
           "-c",
-          "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8081/health')",
+          "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8086/health')",
         ]
       interval: 60s
       timeout: 20s
@@ -52,14 +53,37 @@ services:
       - GITHUB_KEY=${GITHUB_KEY}
       - GITHUB_USERNAME=${GITHUB_USERNAME}
     ports:
-      - "8086:8086"
+      - "8087:8087"
     healthcheck:
       test:
         [
           "CMD",
           "python",
           "-c",
-          "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8086/health')",
+          "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8087/health')",
+        ]
+      interval: 60s
+      timeout: 20s
+      retries: 3
+      start_period: 30s
+    networks:
+      - glance-network
+
+  incident-timer-extension:
+    build:
+      context: .
+      dockerfile: extensions/incident-timer/Dockerfile.extension
+    ports:
+      - "8088:8088"
+    environment:
+      - PAGER_KEY=${PAGER_KEY}
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "python",
+          "-c",
+          "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8088/health')",
         ]
       interval: 60s
       timeout: 20s

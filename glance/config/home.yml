@@ -35,31 +35,11 @@
           hide-header: true
     - size: full
       widgets:
-        - type: custom-api
+        - type: extension
           title: 🚨 PagerDuty Incidents
+          url: http://incident-timer-extension:8088
           cache: 2m
-          hide-header: false
-          url: https://api.pagerduty.com/incidents?total=false&time_zone=UTC&statuses%5B%5D=triggered
-          headers:
-            accept: application/vnd.pagerduty+json;version=2
-            content-type: application/json
-            authorization: Token token=${PAGER_KEY}
-          template: |
-            {{ $incidents := .JSON.Array "incidents" }}
-            {{ if $incidents }}
-              {{ range $incidents }}
-                <div class="margin-block-1">
-                  <a href="{{ .String "html_url" }}" class="color-negative size-h4" style="text-decoration: none;">
-                    🔴 {{ .String "title" }}
-                  </a>
-                  <div class="size-h6 color-subtext">
-                    {{ .String "service.summary" }}
-                  </div>
-                </div>
-              {{ end }}
-            {{ else }}
-              <div class="color-positive size-h4">✅ No Active Incidents</div>
-            {{ end }}
+          allow-potentially-dangerous-html: true
         - type: split-column
           max-columns: 2
           widgets:
@@ -68,14 +48,14 @@
               limit: 10
               cache: 1m
               feeds:
-                - url: http://github-pr-scraper:8086/my-open-prs.xml
+                - url: http://github-pr-scraper:8087/my-open-prs.xml
                   title: Authored by Me
             - type: rss
               title: 👀 PRs to Review
               limit: 10
               cache: 1m
               feeds:
-                - url: http://github-pr-scraper:8086/assigned-prs.xml
+                - url: http://github-pr-scraper:8087/assigned-prs.xml
                   title: Assigned to Me
         - type: repository
           repository: PlayerData/roadmap
@@ -138,6 +118,6 @@
             {{ end }}
         - type: extension
           title: ❄️ Merge Freeze Status
-          url: http://merge-freeze-extension:8081
+          url: http://merge-freeze-extension:8086
           cache: 10m
           allow-potentially-dangerous-html: true
